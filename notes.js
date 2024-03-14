@@ -11,21 +11,54 @@ const getNotes = () => {
 }
 
 
-const addNote = (title,body)=>{
+const addNote = (title, body) => {
 
-//Get existing notes
-const notes = getNotes()
+    //Get existing notes
+    const notes = getNotes()
 
-if(!title)
-{
-return 'Please pass title'
+    if (!title) {
+        return 'Please pass title'
+    }
+
+    notes.push({ title: title, body: body })
+    const stringNotes = JSON.stringify(notes)
+    // write new notes
+    fs.writeFileSync('notes.json', stringNotes)
+
 }
 
-notes.push( { title: title, body:body } )
-const stringNotes = JSON.stringify(notes)
-// write new notes
-fs.writeFileSync('notes.json', stringNotes )
+
+
+const listNode = () => {
+
+    //Get all notes
+    const notes = getNotes()
+
+    if (notes.length === 0) {
+        console.log('No notes to list')
+
+    }
+
+    console.log(notes)
+
 
 }
 
-module.exports = {addNote}
+const readNote = (title)=>{
+
+    if(!title)
+    {
+        console.log('pprovide title to search')
+    }
+
+    const notes = getNotes()
+
+//search for the note with title and get the body
+
+const found = notes.find((element) => element.title = title)
+console.log(found.body)
+
+}
+
+
+module.exports = { addNote, listNode, readNote}
