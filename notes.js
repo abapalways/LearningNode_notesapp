@@ -44,21 +44,37 @@ const listNode = () => {
 
 }
 
-const readNote = (title)=>{
+const readNote = (title) => {
 
-    if(!title)
-    {
-        console.log('pprovide title to search')
+    if (!title) {
+        console.log('provide title to search')
     }
 
     const notes = getNotes()
 
-//search for the note with title and get the body
+    //search for the note with title and get the body
 
-const found = notes.find((element) => element.title = title)
-console.log(found.body)
+    const found = notes.find((element) => element.title = title)
+    console.log(found.body)
 
 }
 
 
-module.exports = { addNote, listNode, readNote}
+const removeNote = (title) => {
+
+    if (!title) {
+        console.log('provide title to search')
+    }
+    const notes = getNotes()
+ 
+
+    const result = notes.filter((element) =>  element.title.valueOf() != title.valueOf() )
+
+    const stringNotes = JSON.stringify(result)
+    // write new notes
+    fs.writeFileSync('notes.json', stringNotes)
+
+}
+
+
+module.exports = { addNote, listNode, readNote, removeNote }
